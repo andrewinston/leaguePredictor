@@ -10,9 +10,9 @@ for i in range(10):
         string += ","
 MATCH_ID = "1752530143"  
 string += " where m.match_id = " + MATCH_ID + " and "
-
-for i in range(10):
-    string += "m"+str(i)+".match_id = "+MATCH_ID+" and " 
+string += "m0.match_id = " + MATCH_ID + " and "
+for i in range(1, 10):
+    string += " m"+str(i)+".match_id = " + "m"+str(i-1)+".match_id and "
 
 for i in range(5):
     string += "m"+str(i)+".team = 1 and "
