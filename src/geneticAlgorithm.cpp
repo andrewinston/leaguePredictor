@@ -27,7 +27,7 @@ struct sample{
 	sample(vector<int> participants_team_1, vector<int> participants_team_2, int winner) {
 		for(auto p1 : participants_team_1){
 			for(auto p2 : participants_team_2){
-				this->input.push_back(winrate_lookup_table[{p1, p2}]);
+				this->input.push_back(winrate_lookup_table.at({p1, p2}));
 			}
 		}
 		this->output = winner;
@@ -43,6 +43,7 @@ struct sample{
 };
 
 vector<sample> training_samples;
+vector<sample> validating_samples;
 
 // FLOAT random number in (a, b)
 double rand_rangef(int a, int b){
@@ -219,28 +220,36 @@ struct genetic_algorithm{
 	}
 };
 
-void initialize_training_samples(){
-	ifstream f("raw_training_samples.txt");
+void read_sample_file(string file_path, vector<sample>& samples){
+	std::ifstream in(file_path);
+	
+	using std::cin;
+	
+	std::streambuf *cinbuf = cin.rdbuf();
+	cin.rdbuf(in.rdbuf());
+
 	int winner;
 	int match_id;
-	while(f >> winner){
-		f >> match_id;
+	while(cin >> winner){
+		cin >> match_id;
 		vector<int> t1;
 		vector<int> t2;
 		int a = 0;
 		for (int i = 0; i < 5; i++){
-			f >> a;
+			cin >> a;
 			t1.push_back(a);
 		}
-		
-		for (int i = 0; i < 5; i++){
-			f >> a;
+		for(int i = 0; i < 5; i++){
+			cin >> a;
 			t2.push_back(a);
 		}
 		training_samples.emplace_back(t1, t2, winner);
 	}
+
+	cin.rdbuf(cinbuf);
 }
 
 int main(){
-	initialize_training_samples();
+	read_sample_file("data/samples/training_samples.txt");
+	read_sample_file("data/samples/validating_samples.txt");
 }
