@@ -1,14 +1,14 @@
 import sqlite3
 
 f = open("data/champion_id.txt", "r")
-id_list = [int(a.split(' ')[0]) for a in f.read().split('\n')[:-1]]
+id_list = [int(a.split(' ')[0]) for a in f.read().split('\n')[:]]
 print(id_list)
-ret = "//this file was generated automatically.\n#include \"winrate_lookup_table.h\"\nmap<pair<int, int>, double> winrate_lookup_table = {\n\t";
+ret = "";
 for c1 in id_list:
 	print(c1)
 	for c2 in id_list:
 		if c1 == c2:
-			ret += "{{"+str(c1)+", "+str(c2)+"}, 0},"
+			ret += str(c1)+" "+str(c2)+" 0\n"
 			continue
 		conn = sqlite3.connect("data/teste.db")
 		cur = conn.cursor()
@@ -25,10 +25,11 @@ for c1 in id_list:
 			if row[1] == row[4]:
 				c1w += row[5]
 		if tot == 0:
-			ret += "{{"+str(c1)+", "+str(c2)+"}, "+str(-1)+"},"
+			ret += str(c1)+" "+str(c2)+" "+str(-1)+"\n"
 		else:
-			ret += "{{"+str(c1)+", "+str(c2)+"}, "+str(c1w/tot)+"},"
-ret += "\n};\n";
-f2 = open("src/winrate_lookup_table.cpp", "w+")
+			ret += str(c1)+" "+str(c2)+" "+str(c1w/tot)+"\n"
+
+output_path = "data/winrate_lookup_table.txt"
+f2 = open(output_path, "w+")
 f2.write(ret)
-print("file winrate_lookup_table.cpp was updated.")
+print("file "+output_path+" was updated.")

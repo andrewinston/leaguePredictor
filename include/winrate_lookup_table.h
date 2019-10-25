@@ -5,6 +5,6 @@
 #include <utility>
 using std::map;
 using std::pair;
-extern const map<pair<int, int>, double> winrate_lookup_table;
-
+extern map<pair<int, int>, double> winrate_lookup_table;
+void populate_winrate_lookup_table();
 #endif

@@ -27,6 +27,7 @@ struct sample{
 	sample(vector<int> participants_team_1, vector<int> participants_team_2, int winner) {
 		for(auto p1 : participants_team_1){
 			for(auto p2 : participants_team_2){
+				cout << p1 << ", " << p2 << endl;
 				this->input.push_back(winrate_lookup_table.at({p1, p2}));
 			}
 		}
@@ -49,6 +50,7 @@ vector<sample> validating_samples;
 double rand_rangef(int a, int b){
 	assert(b >= a);
 	double r = rand()/(double)RAND_MAX;
+	cout << "random generated: " << r*(b-a)+a << endl;
 	return r*(b-a)+a;
 }
 
@@ -56,6 +58,7 @@ double rand_rangef(int a, int b){
 int rand_range(int a, int b){
 	assert(b >= a);
 	int r = rand()%(b-a);
+	cout << "random generated: " << r+a << endl;
 	return r+a;
 }
 
@@ -165,10 +168,14 @@ struct genetic_algorithm{
 	}
 
 	void evaluate_population(){
-		for(auto &ind : population){
+		int x = 0;
+		for(auto& ind : population){
+			cout << "calculating fitness of " << x++ << endl;
 			ind.calculate_fitness(training_samples);
 		}
+		cout << "all fitnesses calculated." << endl;
 		sort(population.begin(), population.end(), fitness_descending_sort);
+		cout << "everything sorted" << endl;
 	}
 
 	void cross(){
@@ -202,12 +209,17 @@ struct genetic_algorithm{
 	void run(){
 		int generation = 0;
 		create_population();
+		cout << "population created." << endl;
 		evaluate_population();
+		cout << "population evaluated." << endl;
 		while(generation < 100){
 			print_elite(generation);
 			cross();
+			cout << "population crossed." << endl;
 			mutate();
+			cout << "population mutated." << endl;
 			evaluate_population();
+			cout << "population evaluated." << endl;
 			generation++;
 		}
 	}
@@ -220,7 +232,7 @@ struct genetic_algorithm{
 	}
 };
 
-void read_sample_file(string file_path, vector<sample>& samples){
+void read_sample_file(std::string file_path, vector<sample>& samples){
 	std::ifstream in(file_path);
 	
 	using std::cin;
@@ -243,13 +255,16 @@ void read_sample_file(string file_path, vector<sample>& samples){
 			cin >> a;
 			t2.push_back(a);
 		}
-		training_samples.emplace_back(t1, t2, winner);
+		samples.emplace_back(t1, t2, winner);
 	}
 
 	cin.rdbuf(cinbuf);
 }
 
 int main(){
-	read_sample_file("data/samples/training_samples.txt");
-	read_sample_file("data/samples/validating_samples.txt");
+	populate_winrate_lookup_table();
+	read_sample_file("data/samples/training_samples.txt", training_samples);
+	//read_sample_file("data/samples/validating_samples.txt", validating_samples);
+	genetic_algorithm ga;
+	ga.run();
 }
