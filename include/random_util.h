@@ -1,5 +1,5 @@
-#ifndef RANDOM_UTIL
-#define RANDOM_UTIL
+#ifndef RANDOM_UTIL_H
+#define RANDOM_UTIL_H
 // FLOAT random number in (a, b)
 double rand_rangef(int a, int b);
 

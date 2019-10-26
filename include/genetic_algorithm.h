@@ -20,7 +20,7 @@ extern vector<sample> validating_samples;
 struct genetic_algorithm{
 	static const int ELITE_SIZE = 10;
 	static const int POPULATION_SIZE = 100;
-	static constexpr double MUTATION_PROBABILITY = 0.4;
+	static constexpr double MUTATION_PROBABILITY = 0.2;
 	static vector<individual> population;
 
 	static void create_population();
@@ -40,5 +40,4 @@ struct genetic_algorithm{
 	static void print_elite(int gen);
 };
 
-void read_sample_file(std::string file_path, vector<sample>& samples);
 #endif

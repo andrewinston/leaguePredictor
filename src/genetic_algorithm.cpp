@@ -1,12 +1,13 @@
-#include <vector>
-#include <utility>
-#include <math.h>
 #include <algorithm>
-#include <iostream>
 #include <assert.h>
-#include <map>
 #include <fstream>
+#include <iostream>
+#include <math.h>
+#include <map>
+#include <utility>
+#include <vector>
 
+#include "file_io.h"
 #include "genetic_algorithm.h"
 #include "individual.h"
 #include "random_util.h"
@@ -111,33 +112,4 @@ void genetic_algorithm::print_elite(int gen){
 	for(int i = 0; i < ELITE_SIZE; i++){
 		cout << "\t" << i+1 << "º: " << population[i].fitness*100 << "%" << endl;
 	}
-}
-
-void read_sample_file(std::string file_path, vector<sample>& samples){
-	std::ifstream in(file_path);
-	
-	using std::cin;
-	
-	std::streambuf *cinbuf = cin.rdbuf();
-	cin.rdbuf(in.rdbuf());
-
-	int winner;
-	int match_id;
-	while(cin >> winner){
-		cin >> match_id;
-		vector<int> t1;
-		vector<int> t2;
-		int a = 0;
-		for (int i = 0; i < 5; i++){
-			cin >> a;
-			t1.push_back(a);
-		}
-		for(int i = 0; i < 5; i++){
-			cin >> a;
-			t2.push_back(a);
-		}
-		samples.emplace_back(t1, t2, winner);
-	}
-
-	cin.rdbuf(cinbuf);
 }

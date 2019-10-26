@@ -15,10 +15,10 @@ double sigmoid(double val);
 double relu(double val);
 
 struct individual{
-	static const int HIDDEN_LAYER_SIZE = 30;
+	static const int HIDDEN_LAYER_SIZE = 15;
 	static const int INPUT_SIZE = 25;
 	static const int OUTPUT_SIZE = 1;
-	static constexpr double MUTATION_PROBABILITY = 0.15;
+	static constexpr double MUTATION_PROBABILITY = 0.05;
 	static const int MINIMAL_WEIGHT = -20;
 	static const int MAXIMAL_WEIGHT = 20;
 	static const int MINIMAL_BIAS = -10;
