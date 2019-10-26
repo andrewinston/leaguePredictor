@@ -4,7 +4,9 @@ import urllib.request
 from urllib.error import HTTPError
 import sqlite3
 import json
-key = "RGAPI-9c0a512f-d334-4e5f-a259-cec18776fa2c"
+config = configparser.ConfigParser()
+config.read('scripts/config.ini')
+key = config['RG-API']['key']
 f = open("matches.txt", "r+")
 matches_found_sofar = [int(val) for val in sorted(f.read().split("\n")[:-1])]
 matches_found_sofar = list(dict.fromkeys(matches_found_sofar))

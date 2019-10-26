@@ -3,7 +3,9 @@ import sys
 import urllib.request
 from urllib.error import HTTPError
 import json
-key = "RGAPI-9c0a512f-d334-4e5f-a259-cec18776fa2c"
+config = configparser.ConfigParser()
+config.read('scripts/config.ini')
+key = config['RG-API']['key']
 f = open("users.txt", "r+")
 userlist = (f.read().split('\n'))
 userlist = [a.split(',')[0].replace(" ", "").lower() for a in userlist]
