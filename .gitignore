@@ -2,4 +2,4 @@
 geneticAlgorithm
 *.swp
 scripts/config.ini
-__py_cache__/
+__pycache__/
