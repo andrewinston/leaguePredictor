@@ -9,6 +9,10 @@ config.read('scripts/config.ini')
 key = config['RG-API']['key']
 
 def save_contents(winrate_matches, training_matches, validation_matches):
+	winrate_matches = set(winrate_matches)
+	training_matches = set(training_matches)
+	validation_matches = set(validation_matches)
+	
 	f = open("data/samples/attempt2/winrate_samples.txt", "w+")
 	f.write("\n".join([(" ".join([str(x) for x in a])) for a in winrate_matches]))
 	f.close()
@@ -38,7 +42,7 @@ def query(match_id):
 		team[-1+participant['teamId']//100].append(participant['championId'])
 	team[0] = sorted(team[0])
 	team[1] = sorted(team[1])
-	ret = [winner, match_id]+team[0]+team[1]
+	ret = tuple([winner, match_id]+team[0]+team[1])
 	return ret
 
 f = open("data/matches.txt", "r+")
@@ -47,17 +51,17 @@ f.close()
 matches = set([int(a) for a in matches.split('\n')])
 
 f = open("data/samples/attempt2/winrate_samples.txt", "r+")
-winrate_matches = [[int(x) for x in a.split(' ')] for a in f.read().split('\n')[1:]]
+winrate_matches = [tuple(int(x) for x in a.split(' ')) for a in f.read().split('\n')[1:]]
 winrate_matches_ids = set([int(a[1]) for a in winrate_matches] if len(winrate_matches) > 0 else [])
 f.close()
 
 f = open("data/samples/attempt2/training_samples.txt", "r+")
-training_matches = [[int(x) for x in a.split(' ')] for a in f.read().split('\n')[1:]]
+training_matches = [tuple(int(x) for x in a.split(' ')) for a in f.read().split('\n')[1:]]
 training_matches_ids = set([int(a[1]) for a in training_matches] if len(training_matches) > 0 else [])
 f.close()
 
 f = open("data/samples/attempt2/validation_samples.txt", "r+")
-validation_matches = [[int(x) for x in a.split(' ')] for a in f.read().split('\n')[1:]]
+validation_matches = [tuple(int(x) for x in a.split(' ')) for a in f.read().split('\n')[1:]]
 validation_matches_ids = set([int(a[1]) for a in validation_matches] if len(validation_matches) > 0 else [])
 f.close()
 
