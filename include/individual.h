@@ -15,14 +15,14 @@ double sigmoid(double val);
 double relu(double val);
 
 struct individual{
-	static const int HIDDEN_LAYER_SIZE = 15;
+	static const int HIDDEN_LAYER_SIZE = 20;
 	static const int INPUT_SIZE = 25;
 	static const int OUTPUT_SIZE = 1;
-	static constexpr double MUTATION_PROBABILITY = 0.05;
-	static const int MINIMAL_WEIGHT = -20;
-	static const int MAXIMAL_WEIGHT = 20;
-	static const int MINIMAL_BIAS = -10;
-	static const int MAXIMAL_BIAS = 10;
+	static constexpr double MUTATION_PROBABILITY = 0.10;
+	static const int MINIMAL_WEIGHT = -100;
+	static const int MAXIMAL_WEIGHT = 100;
+	static const int MINIMAL_BIAS = -100;
+	static const int MAXIMAL_BIAS = 100;
 	//			weight, bias
 	vector<pair<double, double>> chromosome{HIDDEN_LAYER_SIZE*(INPUT_SIZE+OUTPUT_SIZE), make_pair(0.0, 0.0)};
 

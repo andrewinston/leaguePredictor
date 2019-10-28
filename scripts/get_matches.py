@@ -9,6 +9,13 @@ import random
 
 ONE_WEEK_MILLIS = 604700000
 matches_found_sofar = set()
+
+def save_contents(m):
+	f = open("data/matches.txt", "w+")
+	f.write("\n".join([str(x) for x in m]))
+	f.close()
+	print("file saved successfully")
+
 def inclusive_range(a, b, step=1):
 	l = list(range(a, b, step))
 	l.append(b)
@@ -44,15 +51,17 @@ f = open("data/matches.txt", "r+")
 matches_found_sofar = set([int(val) for val in sorted(f.read().split("\n")[:-1])])
 f.close()
 
-try:
-	random.shuffle(users)
-	for user in users:
-		matches = query_on_interval(user, constants.patch_dates[patch][0], constants.patch_dates[patch][1])
-		matches_found_sofar = matches_found_sofar.union(matches)
-		
-except (KeyboardInterrupt, HTTPError) as e:
-	print(str(e))
-	f = open("data/matches.txt", "w+")
-	f.write("\n".join([str(x) for x in matches_found_sofar]))
-	f.close()
-	print("file saved successfully")
+while True:
+	try:
+		random.shuffle(users)
+		for user in users:
+			matches = query_on_interval(user, constants.patch_dates[patch][0], constants.patch_dates[patch][1])
+			matches_found_sofar = matches_found_sofar.union(matches)
+			
+	except HTTPError as e:
+		print("error: " + str(e))
+		save_contents(matches_found_sofar)
+
+	except KeyboardInterrupt as e:
+		save_contents(matches_found_sofar)
+		break

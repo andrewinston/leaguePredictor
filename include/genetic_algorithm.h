@@ -18,9 +18,9 @@ extern vector<sample> training_samples;
 extern vector<sample> validating_samples;
 
 struct genetic_algorithm{
-	static const int ELITE_SIZE = 10;
-	static const int POPULATION_SIZE = 100;
-	static constexpr double MUTATION_PROBABILITY = 0.2;
+	static const int ELITE_SIZE = 20;
+	static const int POPULATION_SIZE = 1000;
+	static constexpr double MUTATION_PROBABILITY = 0.3;
 	static vector<individual> population;
 
 	static void create_population();

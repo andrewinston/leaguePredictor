@@ -19,8 +19,11 @@ for match in matches:
 
 output_path = "data/winrate_lookup_table.txt"
 f = open(output_path, "w+")
-
+maxi = ((0, 0), (0, 0))
 for (k, v) in table.items():
+	if v[1] > maxi[0][0]:
+		maxi = (k, tuple(v))
 	f.write(str(k[0]) + " " + str(k[1]) + " " + str(float(v[0])/v[1]) + "\n")
 
 print(table)
+print(maxi)
