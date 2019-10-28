@@ -4,6 +4,8 @@ import urllib.request
 from urllib.error import HTTPError
 import sqlite3
 import json
+import configparser
+
 config = configparser.ConfigParser()
 config.read('scripts/config.ini')
 key = config['RG-API']['key']
