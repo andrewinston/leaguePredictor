@@ -1,2 +1,5 @@
 [RG-API]
 key = ADD-YOUR-KEY-HERE
+
+[GENERAL-CONFIG]
+patch = 9.20
