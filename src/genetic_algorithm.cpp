@@ -82,7 +82,7 @@ void genetic_algorithm::run(){
 	cout << "population created." << endl;
 	evaluate_population();
 	cout << "population evaluated." << endl;
-	while(generation < 1000){
+	while(generation < 100000){
 		print_elite(generation+1);
 		run_validation(population[0]);
 		cross();
