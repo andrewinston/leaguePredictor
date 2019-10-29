@@ -16,7 +16,7 @@ double relu(double val);
 
 struct individual{
 	static const int HIDDEN_LAYER_SIZE = 20;
-	static const int INPUT_SIZE = 25;
+	static const int INPUT_SIZE = 50;
 	static const int OUTPUT_SIZE = 1;
 	static constexpr double MUTATION_PROBABILITY = 0.10;
 	static const int MINIMAL_WEIGHT = -100;
@@ -40,7 +40,7 @@ struct individual{
 
 	double get_bias_output(int i);
 
-	int calculate_outcome(vector<double> in);
+	int calculate_outcome(vector<int> in);
 
 	void calculate_fitness(const vector<sample>& samples);
 

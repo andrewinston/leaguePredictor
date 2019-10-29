@@ -43,7 +43,7 @@ double individual::get_bias_output(int i){
 	return chromosome[i*(INPUT_SIZE+OUTPUT_SIZE)+INPUT_SIZE].second;
 }
 
-int individual::calculate_outcome(vector<double> in){
+int individual::calculate_outcome(vector<int> in){
 	vector<double> hidden(HIDDEN_LAYER_SIZE, 0.0);
 	for(int i = 0; i < INPUT_SIZE; i++){
 		for(int j = 0; j < HIDDEN_LAYER_SIZE; j++){

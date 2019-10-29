@@ -7,6 +7,6 @@
 using std::map;
 using std::pair;
 
-extern map<pair<int, int>, double> winrate_lookup_table;
+extern map<pair<int, int>, pair<int, int>> winrate_lookup_table;
 
 #endif

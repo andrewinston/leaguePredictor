@@ -42,9 +42,9 @@ void populate_winrate_lookup_table(){
 	cin.rdbuf(in.rdbuf());
 	
 	int a, b;
-	double c;
+	int c, d;
 	while(cin >> a >> b >> c){
-		winrate_lookup_table[{a, b}] = c;
+		winrate_lookup_table[{a, b}] = {c, d};
 	}
 
 	cin.rdbuf(cinbuf);
