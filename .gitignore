@@ -3,3 +3,4 @@ geneticAlgorithm
 *.swp
 scripts/config.ini
 __pycache__/
+data/winrate_lookup_table.txt
