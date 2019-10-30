@@ -7,7 +7,8 @@ import constants
 import time
 import random
 
-ONE_WEEK_MILLIS = 604700000
+ONE_WEEK_MILLIS = 604800000
+DAY_MILLIS = 24*60*60*1000
 matches_found_sofar = set()
 
 def save_contents(m):
@@ -24,14 +25,15 @@ def inclusive_range(a, b, step=1):
 def query_on_interval(user, start_stamp, end_stamp):
 	prev = start_stamp
 	matches = set()
-	for s in inclusive_range(int(start_stamp), int(end_stamp), ONE_WEEK_MILLIS)[1:]:
+	for s in inclusive_range(int(start_stamp), int(end_stamp), DAY_MILLIS)[1:]:
 		try:
 			url = "https://br1.api.riotgames.com/lol/match/v4/matchlists/by-account/"+user[1]+"?beginTime="+str(int(prev))+"&endTime="+str(int(s))+"&queue=420&api_key="+key
 			matches = matches.union(set([m['gameId'] for m in json.loads(urllib.request.urlopen(url).read())['matches']]))
 			matches = matches.difference(matches_found_sofar)
-			time.sleep(1.3)
+			time.sleep(2.5)
 			prev = s
-		except HTTPError:
+		except HTTPError as e:
+			print("error: " + str(e))
 			pass
 
 	if matches != set():

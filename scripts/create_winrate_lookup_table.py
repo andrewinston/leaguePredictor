@@ -1,5 +1,3 @@
-import sqlite3
-
 table = {}
 
 f = open("data/samples/attempt2/winrate_samples.txt")
@@ -23,7 +21,7 @@ maxi = ((0, 0), (0, 0))
 for (k, v) in table.items():
 	if v[1] > maxi[1][1]:
 		maxi = (k, tuple(v))
-	f.write(str(k[0]) + " " + str(k[1]) + " " + str(float(v[0])/v[1]) + "\n")
+	f.write(str(k[0]) + " " + str(k[1]) + " " + str(v[0]) + " " + str(v[1]) + "\n")
 
 #print(table)
 print(maxi)

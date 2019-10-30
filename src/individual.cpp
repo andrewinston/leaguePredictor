@@ -43,7 +43,7 @@ double individual::get_bias_output(int i){
 	return chromosome[i*(INPUT_SIZE+OUTPUT_SIZE)+INPUT_SIZE].second;
 }
 
-int individual::calculate_outcome(vector<int> in){
+double individual::calculate_outcome(vector<int> in){
 	vector<double> hidden(HIDDEN_LAYER_SIZE, 0.0);
 	for(int i = 0; i < INPUT_SIZE; i++){
 		for(int j = 0; j < HIDDEN_LAYER_SIZE; j++){
@@ -54,17 +54,17 @@ int individual::calculate_outcome(vector<int> in){
 	for(int i = 0; i < HIDDEN_LAYER_SIZE; i++) {
 		output += activation_function_input(hidden[i])*get_weight_output(i) + get_bias_output(i);
 	}
-	return activation_function_output(output) >= 0.5;
+	return activation_function_output(output);
 }
 
 void individual::calculate_fitness(const vector<sample>& samples){
 	int total = (int)samples.size();
-	int correct = 0;
+	double error = 0;
 	for(sample s : samples){
-		int outcome = calculate_outcome(s.input);
-		correct += outcome+1 == s.output;
+		double outcome = calculate_outcome(s.input);
+		error += fabs(outcome-(s.output-1));
 	}
-	this->fitness = correct/(double)total;
+	this->fitness = 1-error/(double)total;
 }
 
 void individual::mutate(){

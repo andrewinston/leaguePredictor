@@ -13,15 +13,15 @@
 #include "random_util.h"
 #include "winrate_lookup_table.h"
 
-using std::ifstream;
-using std::endl;
 using std::cout;
+using std::endl;
+using std::ifstream;
 using std::make_pair;
+using std::map;
 using std::max;
 using std::pair;
-using std::vector;
 using std::swap;
-using std::map;
+using std::vector;
 
 vector<sample> training_samples{};
 vector<sample> validating_samples{};
@@ -40,12 +40,9 @@ void genetic_algorithm::create_population(){
 
 void genetic_algorithm::evaluate_population(){
 	for(auto& ind : population){
-		//cout << "calculating fitness of " << x++ << endl;
 		ind.calculate_fitness(training_samples);
 	}
-	////cout << "all fitnesses calculated." << endl;
 	sort(population.begin(), population.end(), fitness_descending_sort);
-	//cout << "everything sorted" << endl;
 }
 
 void genetic_algorithm::cross(){

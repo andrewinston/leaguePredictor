@@ -37,14 +37,42 @@ void read_sample_file(std::string file_path, vector<sample>& samples){
 }
 
 void populate_winrate_lookup_table(){
-	std::ifstream in("data/winrate_lookup_table.txt");
+	std::ifstream in("data/samples/attempt2/winrate_samples.txt");
 	std::streambuf *cinbuf = cin.rdbuf();
 	cin.rdbuf(in.rdbuf());
-	
-	int a, b;
-	int c, d;
-	while(cin >> a >> b >> c){
-		winrate_lookup_table[{a, b}] = {c, d};
+	int winner, match_id;
+	while(cin >> winner >> match_id){
+		vector<int> t1, t2;
+		for(int i = 0; i < 5; i++){
+			int c;
+			cin >> c;
+			t1.push_back(c);
+		}
+		for(int i = 0; i < 5; i++){
+			int c;
+			cin >> c;
+			t2.push_back(c);
+		}
+		for(auto c1 : t1){
+			for(auto c2 : t2){
+				if(!winrate_lookup_table.count({c1, c2})){
+					winrate_lookup_table[{c1, c2}] = {0, 0};
+					winrate_lookup_table[{c2, c1}] = {0, 0};
+				}
+				if(winner == 1){
+					pair<int, int> res = winrate_lookup_table[{c1, c2}];
+					pair<int, int> res2 = winrate_lookup_table[{c2, c1}];
+					winrate_lookup_table[{c1, c2}] = {res.first+1, res.second+1};
+					winrate_lookup_table[{c2, c1}] = {res2.first, res2.second+1};
+				}
+				else{
+					pair<int, int> res = winrate_lookup_table[{c1, c2}];
+					pair<int, int> res2 = winrate_lookup_table[{c2, c1}];
+					winrate_lookup_table[{c1, c2}] = {res.first, res.second+1};
+					winrate_lookup_table[{c2, c1}] = {res2.first+1, res2.second+1};
+				}
+			}
+		}
 	}
 
 	cin.rdbuf(cinbuf);

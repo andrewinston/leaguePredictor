@@ -67,6 +67,9 @@ f.close()
 
 i = 0
 while True:
+	config = configparser.ConfigParser()
+	config.read('scripts/config.ini')
+	key = config['RG-API']['key']
 	matches = matches.difference(validation_matches_ids).difference(training_matches_ids).difference(winrate_matches_ids)
 	random.shuffle(list(matches))
 	try:
@@ -84,6 +87,8 @@ while True:
 				validation_matches.append(content)
 			print("match " + str(match) + " added.")
 			i+=1
+			if i%50 == 0:
+				save_contents(winrate_matches, training_matches, validation_matches)
 	except Exception as e:
 		print("Error: " + str(e))
 		save_contents(winrate_matches, training_matches, validation_matches)
