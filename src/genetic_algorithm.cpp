@@ -11,7 +11,7 @@
 #include "genetic_algorithm.h"
 #include "individual.h"
 #include "random_util.h"
-#include "winrate_lookup_table.h"
+#include "table.h"
 
 using std::cout;
 using std::endl;
@@ -46,7 +46,7 @@ void genetic_algorithm::evaluate_population(){
 }
 
 void genetic_algorithm::cross(){
-	for(int i = ELITE_SIZE; i < POPULATION_SIZE; i+=2){
+	for(int i = ELITE_SIZE; i < POPULATION_SIZE-1; i+=2){
 		int i1 = rand_range(0, ELITE_SIZE), i2 = rand_range(0, ELITE_SIZE);
 		pair<individual, individual> crossed = crossover(population[i1], population[i2]);
 		population[i] = crossed.first;

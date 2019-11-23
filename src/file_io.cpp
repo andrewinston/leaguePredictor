@@ -3,13 +3,14 @@
 #include <string>
 #include <vector>
 
+#include "file_io.h"
 #include "sample.h"
-#include "winrate_lookup_table.h"
+#include "table.h"
 
 using std::vector;
 using std::cin;
 
-void read_sample_file(std::string file_path, vector<sample>& samples){
+void read_samples_file(std::string file_path, vector<sample>& samples){
 	std::ifstream in(file_path);
 	
 	std::streambuf *cinbuf = cin.rdbuf();
@@ -31,6 +32,28 @@ void read_sample_file(std::string file_path, vector<sample>& samples){
 			t2.push_back(a);
 		}
 		samples.emplace_back(t1, t2, winner);
+	}
+
+	cin.rdbuf(cinbuf);
+}
+
+void populate_tables(){
+	populate_winrate_lookup_table();
+	populate_champion_stats_lookup_table();
+}
+
+void populate_champion_stats_lookup_table(){
+	std::ifstream in("data/champion_stats.txt");
+	std::streambuf *cinbuf = cin.rdbuf();
+	cin.rdbuf(in.rdbuf());
+
+	int id;
+	while(cin >> id){
+		vector<double> aux(20, 0.0);
+		for(int i = 0; i < 20; i++){
+			cin >> aux[i];
+		}
+		champion_stats_lookup_table[id] = aux;
 	}
 
 	cin.rdbuf(cinbuf);

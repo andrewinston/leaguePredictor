@@ -15,8 +15,8 @@ double sigmoid(double val);
 double relu(double val);
 
 struct individual{
-	static const int HIDDEN_LAYER_SIZE = 55;
-	static const int INPUT_SIZE = 50;
+	static const int HIDDEN_LAYER_SIZE = 100;
+	static const int INPUT_SIZE = 200;
 	static const int OUTPUT_SIZE = 1;
 	static constexpr double MUTATION_PROBABILITY = 0.3;
 	static const int MINIMAL_WEIGHT = -15;
@@ -40,7 +40,7 @@ struct individual{
 
 	double get_bias_output(int i);
 
-	double calculate_outcome(vector<int> in);
+	double calculate_outcome(vector<double> in);
 
 	void calculate_fitness(const vector<sample>& samples);
 
